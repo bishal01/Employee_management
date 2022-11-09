@@ -1,0 +1,74 @@
+{%  extends 'main.html' %}
+
+{% block content %}
+
+{%  include 'status.html' %}
+
+<br>
+
+<div class="row">
+	<div class="col-md-5">
+		<h5>CUSTOMERS:</h5>
+		<hr>
+		<div class="card card-body">
+			<a class="btn btn-primary  btn-sm btn-block" href="">Create Customer</a>
+			<table class="table table-sm">
+				<tr>
+					<th></th>
+					<th>Customer</th>
+					<th>Phone</th>
+				</tr>
+
+				{% for c in customer %}
+					<tr>
+						<td><a class="btn btn-sm btn-info" href="{% url 'customer_pages' c.id %}">View</a></td>
+						<td>{{c.name}}</td>
+						<td>{{c.phone}}</td>
+					</tr>
+				{% endfor %}
+
+			</table>
+		</div>
+	</div>
+
+	<div class="col-md-7">
+		<h5>LAST 5 ORDERS</h5>
+		<hr>
+		<div class="card card-body">
+			<div>
+				<form method="GET">
+					{{myfilter.form}}
+					<button type="Submit" >Search</button>
+				</form>
+			</div>
+			<table class="table table-sm">
+				<tr>
+                    <th>Id</th>
+					<th>Product</th>
+					<th>Date Orderd</th>
+					<th>Status</th>
+					<th>Update</th>
+					<th>Remove</th>
+				</tr>
+                     {% for o in orders %}
+					<tr> 
+                        <td>{{o.id}}</td>
+						<td>{{o.product.name}}</td>
+						<td>{{o.date_created}}</td>
+						<td>{{o.status}}</td>
+						<td><a class="btn btn-sm btn-info" href="{% url 'update_order' o.id %}">Update</a></td>
+
+						<td><a class="btn btn-sm btn-danger" href="{% url 'delete_item' o.id %}">Delete</a></td>
+
+					</tr>
+                    {% endfor %}
+			
+
+		
+			</table>
+		</div>
+	</div>
+
+</div>
+
+{% endblock %}
